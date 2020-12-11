@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence  http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd" version="2.0">
+  <persistence-unit name="enhance">
+    <class>com.x.teamwork.core.entity.Task</class>
+    <class>com.x.base.core.entity.SliceJpaObject</class>
+    <class>com.x.base.core.entity.JpaObject</class>
+    <class>com.x.teamwork.core.entity.TaskRelevance</class>
+    <class>com.x.teamwork.core.entity.TaskView</class>
+    <class>com.x.teamwork.core.entity.TaskTagRele</class>
+    <class>com.x.teamwork.core.entity.Review</class>
+    <class>com.x.teamwork.core.entity.BatchOperation</class>
+    <class>com.x.teamwork.core.entity.Priority</class>
+    <class>com.x.teamwork.core.entity.Attachment</class>
+    <class>com.x.teamwork.core.entity.Dynamic</class>
+    <class>com.x.teamwork.core.entity.TaskListRele</class>
+    <class>com.x.base.core.entity.StorageObject</class>
+    <class>com.x.teamwork.core.entity.TaskTag</class>
+    <class>com.x.teamwork.core.entity.ProjectGroup</class>
+    <class>com.x.teamwork.core.entity.SystemConfig</class>
+    <class>com.x.teamwork.core.entity.ProjectConfig</class>
+    <class>com.x.teamwork.core.entity.TaskDetail</class>
+    <class>com.x.teamwork.core.entity.TaskExtField</class>
+    <class>com.x.teamwork.core.entity.ChatContent</class>
+    <class>com.x.teamwork.core.entity.Config</class>
+    <class>com.x.teamwork.core.entity.TaskListTemplate</class>
+    <class>com.x.teamwork.core.entity.Chat</class>
+    <class>com.x.teamwork.core.entity.CustomExtFieldRele</class>
+    <class>com.x.teamwork.core.entity.TaskGroup</class>
+    <class>com.x.teamwork.core.entity.Project</class>
+    <class>com.x.teamwork.core.entity.SystemConfigLobValue</class>
+    <class>com.x.teamwork.core.entity.TaskList</class>
+    <class>com.x.teamwork.core.entity.ProjectDetail</class>
+    <class>com.x.teamwork.core.entity.ProjectTemplate</class>
+    <class>com.x.teamwork.core.entity.TaskGroupRele</class>
+    <class>com.x.teamwork.core.entity.ProjectGroupRele</class>
+    <class>com.x.teamwork.core.entity.DynamicDetail</class>
+  </persistence-unit>
+</persistence>
