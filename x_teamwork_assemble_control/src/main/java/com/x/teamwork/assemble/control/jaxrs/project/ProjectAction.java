@@ -444,4 +444,23 @@ public class ProjectAction extends StandardJaxrsAction {
 		}
 		asyncResponse.resume(ResponseFactory.getEntityTagActionResultResponse(request, result));
 	}
+
+	@JaxrsMethodDescribe(value = "根据标识删除项目信息(回收站中物理删除).", action = ActionRemove.class)
+	@DELETE
+	@Path("{id}/remove")
+	@Produces(HttpMediaType.APPLICATION_JSON_UTF_8)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void remove(@Suspended final AsyncResponse asyncResponse,
+					   @Context HttpServletRequest request,
+					   @JaxrsParameterDescribe("标识") @PathParam("id") String id ) {
+		ActionResult<ActionRemove.Wo> result = new ActionResult<>();
+		EffectivePerson effectivePerson = this.effectivePerson(request);
+		try {
+			result = new ActionRemove().execute(request, effectivePerson, id);
+		} catch (Exception e) {
+			logger.error(e, effectivePerson, request, null);
+			result.error(e);
+		}
+		asyncResponse.resume(ResponseFactory.getEntityTagActionResultResponse(request, result));
+	}
 }

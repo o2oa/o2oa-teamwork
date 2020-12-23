@@ -52,6 +52,33 @@ public class ProjectPersistService {
 		}
 	}
 
+	public void remove( String flag, EffectivePerson currentPerson ) throws Exception {
+		if ( StringUtils.isEmpty( flag )) {
+			throw new Exception("flag is empty.");
+		}
+		Boolean hasDeletePermission = false;
+		if( currentPerson.isManager() ) {
+			hasDeletePermission = true;
+		}
+		try (EntityManagerContainer emc = EntityManagerContainerFactory.instance().create()) {
+			Project project = projectService.get(emc, flag);
+			//管理员可以删除，创建者可以删除
+			if( !hasDeletePermission ) {
+				//看看是不是项目创建者
+				if( project.getCreatorPerson().equalsIgnoreCase( currentPerson.getDistinguishedName() )) {
+					hasDeletePermission = true;
+				}
+			}
+			if( !hasDeletePermission ) {
+				throw new Exception("project delete permission denied.");
+			}else {
+				projectService.recycle( emc, flag );
+			}
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
 	public Project save( Project project, ProjectDetail projectDetail, EffectivePerson effectivePerson ) throws Exception {
 		if ( project == null) {
 			throw new Exception("project is null.");
