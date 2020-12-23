@@ -425,6 +425,15 @@
         "display":"",
         "background":"url(../x_component_TeamWork/$ProjectList/default/icon/icon_delete_white.png) no-repeat center "
     },
+    projectBlockItemIconTrueRemove:{
+        "cursor":"pointer",
+        "width":"24px",
+        "height":"24px",
+        "float":"right",
+        "margin-right":"5px",
+        "display":"",
+        "background":"url(../x_component_TeamWork/$ProjectList/default/icon/icon_remove.png) no-repeat center"
+    },
     projectBlockItemName:{
         "width":"200px",
         "overflow": "hidden",
@@ -552,6 +561,14 @@
         "height":"16px",
         "margin":"30px 5px",
         background: "url(../x_component_TeamWork/$ProjectList/default/icon/icon_wdxx_1.png) no-repeat center "
+    },
+    projectListItemRemoveTrueGreyIcon:{
+        "float":"right",
+        "width":"16px",
+        "height":"16px",
+        "margin":"30px 5px",
+        "display":"",
+        background: "url(../x_component_TeamWork/$ProjectList/default/icon/icon_remove_grey.png) no-repeat center "
     },
     addProjectList:{
         "width":"100%",

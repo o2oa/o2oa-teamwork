@@ -695,7 +695,7 @@ MWF.xApplication.TeamWork.ProjectList = new Class({
         if(this.layoutList) this.layoutList.empty();
         var _self = this;
         var id = "(0)";
-        var count = 100;
+        var count = 200;
         var filter = {};
         var typeAction = "listNextWithFilter";
         if(options && options.type && options.type=="all"){
@@ -803,9 +803,11 @@ MWF.xApplication.TeamWork.ProjectList = new Class({
                         });
                     }
                 });
-                this.addProjectListImgContainer = new Element("div.addProjectListImgContainer",{styles:this.css.addProjectListImgContainer}).inject(this.addProjectList);
-                this.addProjectListImg = new Element("div.addProjectListImg",{styles:this.css.addProjectListImg}).inject(this.addProjectListImgContainer);
-                this.addProjectListText = new Element("div.addProjectListText",{styles:this.css.addProjectListText,text:this.lp.content.addProjectListText}).inject(this.addProjectList);
+                if(options.type!=="remove"){
+                    this.addProjectListImgContainer = new Element("div.addProjectListImgContainer",{styles:this.css.addProjectListImgContainer}).inject(this.addProjectList);
+                    this.addProjectListImg = new Element("div.addProjectListImg",{styles:this.css.addProjectListImg}).inject(this.addProjectListImgContainer);
+                    this.addProjectListText = new Element("div.addProjectListText",{styles:this.css.addProjectListText,text:this.lp.content.addProjectListText}).inject(this.addProjectList);
+                }
 
             }else{
                 if(projectItemData) {
@@ -841,29 +843,32 @@ MWF.xApplication.TeamWork.ProjectList = new Class({
                     }.bind(this));
                 }
 
-                this.addProjectBlock = new Element("div.addProjectBlock",{styles:this.css.addProjectBlock}).inject(this.layoutList);
-                this.addProjectBlockIcon = new Element("div.addProjectBlockIcon",{styles:this.css.addProjectBlockIcon}).inject(this.addProjectBlock);
-                this.addProjectBlockText = new Element("div.addProjectBlockText",{styles:this.css.addProjectBlockText,text:this.lp.content.addProjectBlockText}).inject(this.addProjectBlock);
-                this.addProjectBlock.addEvents({
-                    click:function(){
-                        _self.addNewProject();
-                    },
-                    mouseenter:function(){
-                        this.setStyles({
-                            "box-shadow":"0px 0px 10px #4a90e2"
-                        });
+                if(options.type!=="remove"){
+                    this.addProjectBlock = new Element("div.addProjectBlock",{styles:this.css.addProjectBlock}).inject(this.layoutList);
+                    this.addProjectBlockIcon = new Element("div.addProjectBlockIcon",{styles:this.css.addProjectBlockIcon}).inject(this.addProjectBlock);
+                    this.addProjectBlockText = new Element("div.addProjectBlockText",{styles:this.css.addProjectBlockText,text:this.lp.content.addProjectBlockText}).inject(this.addProjectBlock);
+                    this.addProjectBlock.addEvents({
+                        click:function(){
+                            _self.addNewProject();
+                        },
+                        mouseenter:function(){
+                            this.setStyles({
+                                "box-shadow":"0px 0px 10px #4a90e2"
+                            });
 
-                        //var fx = new Fx.Tween(this,{duration:50});
-                        //fx.start(["margin-top"] ,"10px", "5px");
-                    },
-                    mouseleave:function(){
-                        this.setStyles({
-                            "box-shadow":"0px 0px 0px #DFDFDF"
-                        });
-                        //var fx = new Fx.Tween(this,{duration:50});
-                        //fx.start(["margin-top"] ,"5px", "10px");
-                    }
-                })
+                            //var fx = new Fx.Tween(this,{duration:50});
+                            //fx.start(["margin-top"] ,"10px", "5px");
+                        },
+                        mouseleave:function(){
+                            this.setStyles({
+                                "box-shadow":"0px 0px 0px #DFDFDF"
+                            });
+                            //var fx = new Fx.Tween(this,{duration:50});
+                            //fx.start(["margin-top"] ,"5px", "10px");
+                        }
+                    })
+                }
+
             }
         }.bind(this));
 
@@ -875,61 +880,85 @@ MWF.xApplication.TeamWork.ProjectList = new Class({
         var projectBlockItemContainer = new Element("div.projectBlockItemContainer",{styles:this.css.projectBlockItemContainer}).inject(container);
         var projectBlockItemIconContainer = new Element("div.projectBlockItemIconContainer",{styles:this.css.projectBlockItemIconContainer}).inject(projectBlockItemContainer);
 
-        var projectBlockItemIconFav = new Element("div.projectBlockItemIconFav",{styles:this.css.projectBlockItemIconFav,title: this.lp.icon.star}).inject(projectBlockItemIconContainer);
-        projectBlockItemIconFav.addEvents({
-            click:function(e){
-                _self.setFav(d,function(data){
-                    _self.actions.get(data.data.id,function(json){
-                        _self.loadSingleBlockItem(container,json.data)
+        if(!d.deleted){
+            var projectBlockItemIconFav = new Element("div.projectBlockItemIconFav",{styles:this.css.projectBlockItemIconFav,title: this.lp.icon.star}).inject(projectBlockItemIconContainer);
+            projectBlockItemIconFav.addEvents({
+                click:function(e){
+                    _self.setFav(d,function(data){
+                        _self.actions.get(data.data.id,function(json){
+                            _self.loadSingleBlockItem(container,json.data)
+                        });
+                        _self.createNavi();
                     });
-                    _self.createNavi();
-                });
 
-                e.stopPropagation();
-            }
-        });
-
-        if(d.star){
-            projectBlockItemIconFav.setStyles({
-                "background-image":"url(../x_component_TeamWork/$ProjectList/default/icon/icon_wdxx_click.png)"
+                    e.stopPropagation();
+                }
             });
+
+            if(d.star){
+                projectBlockItemIconFav.setStyles({
+                    "background-image":"url(../x_component_TeamWork/$ProjectList/default/icon/icon_wdxx_click.png)"
+                });
+            }
+
+            var projectBlockItemIconGroup = new Element("div.projectBlockItemIconGroup",{styles:this.css.projectBlockItemIconGroup,title:this.lp.icon.group}).inject(projectBlockItemIconContainer);
+            projectBlockItemIconGroup.addEvents({
+                click:function(e){
+                    this.getProject(d.id,function(json){
+                        var pdata = json;
+                        var data = {groups:json.groups};
+                        MWF.xDesktop.requireApp("TeamWork", "GroupSelect", function(){
+                            var gs = new MWF.xApplication.TeamWork.GroupSelect(this.container, projectBlockItemIconGroup, this.app, data, {
+                                axis : "y",
+                                nodeStyles : {
+                                    "min-width":"190px",
+                                    "z-index" : "102"
+                                },
+                                onClose:function(rs){
+                                    if(rs){
+                                        var ddata={
+                                            id:pdata.id,
+                                            title:pdata.title,
+                                            description:pdata.description,
+                                            groups:rs
+                                        };
+
+                                        this.rootActions.ProjectAction.save(ddata,function(json){
+                                            //debugger;
+                                        }.bind(this))
+                                    }
+                                }.bind(this)
+                            });
+                            gs.load();
+                        }.bind(this));
+                    }.bind(this));
+
+                    e.stopPropagation();
+                }.bind(this)
+            });
+        }else{
+            var projectBlockItemIconTrueRemove = new Element("div.projectBlockItemIconTrueRemove",{styles:this.css.projectBlockItemIconTrueRemove,title:this.lp.icon.remove}).inject(projectBlockItemIconContainer);
+            projectBlockItemIconTrueRemove.addEvents({
+                click:function(e){
+                    _self.app.confirm("warn",e,_self.app.lp.common.confirm.removeTitle,_self.app.lp.common.confirm.removeTrue,300,120,function(){
+                        _self.rootActions.ProjectAction.remove(d.id,function(){
+                            _self.openItem({"type":"remove"});
+                            _self.createNavi()
+                        }.bind(this));
+
+                        this.close();
+
+
+                    },function(){
+                        this.close();
+
+                    });
+
+                    e.stopPropagation();
+                }
+            })
         }
 
-        var projectBlockItemIconGroup = new Element("div.projectBlockItemIconGroup",{styles:this.css.projectBlockItemIconGroup,title:this.lp.icon.group}).inject(projectBlockItemIconContainer);
-        projectBlockItemIconGroup.addEvents({
-            click:function(e){
-                this.getProject(d.id,function(json){
-                    var pdata = json;
-                    var data = {groups:json.groups};
-                    MWF.xDesktop.requireApp("TeamWork", "GroupSelect", function(){
-                        var gs = new MWF.xApplication.TeamWork.GroupSelect(this.container, projectBlockItemIconGroup, this.app, data, {
-                            axis : "y",
-                            nodeStyles : {
-                                "min-width":"190px",
-                                "z-index" : "102"
-                            },
-                            onClose:function(rs){
-                                if(rs){
-                                    var ddata={
-                                        id:pdata.id,
-                                        title:pdata.title,
-                                        description:pdata.description,
-                                        groups:rs
-                                    };
-
-                                    this.rootActions.ProjectAction.save(ddata,function(json){
-                                        //debugger;
-                                    }.bind(this))
-                                }
-                            }.bind(this)
-                        });
-                        gs.load();
-                    }.bind(this));
-                }.bind(this));
-
-                e.stopPropagation();
-            }.bind(this)
-        });
 
 
         if(d.control.founder){
@@ -1003,70 +1032,92 @@ MWF.xApplication.TeamWork.ProjectList = new Class({
         var projectListItemDes = new Element("div.projectListItemDes",{styles:this.css.projectListItemDes,text:d.description||""}).inject(projectListItemInforContainer);
         var projectListItemIconContainer = new Element("div.projectListItemIconContainer",{styles:this.css.projectListItemIconContainer}).inject(projectListItemContainer);
 
-        var projectListItemFavIcon = new Element("div.projectListItemFavIcon",{styles:this.css.projectListItemFavIcon,title:this.lp.icon.star}).inject(projectListItemIconContainer);
-        projectListItemFavIcon.addEvents({
-            click:function(e){
-                _self.setFav(d,function(data){
-                    _self.actions.get(data.data.id,function(json){
-                        _self.loadSingleListItem(container,json.data)
-                    });
-                    _self.createNavi();
-                });
-                if(projectListItemFavIcon.getStyle("background-image").indexOf("icon_wdxx_click.png")>-1){
-                    projectListItemFavIcon.setStyles({
-                        "background-image":"url(../x_component_TeamWork/$ProjectList/default/icon/icon_wdxx_1.png)"
-                    })
-                }else{
-                    projectListItemFavIcon.setStyles({
-                        "background-image":"url(../x_component_TeamWork/$ProjectList/default/icon/icon_wdxx_click.png)"
-                    })
-                }
-                e.stopPropagation();
-            }
-        });
-
-        if(d.star){
-            projectListItemFavIcon.setStyles({
-                "background-image":"url(../x_component_TeamWork/$ProjectList/default/icon/icon_wdxx_click.png)"
-            });
-        }
-
-        var projectListItemGroupIcon = new Element("div.projectListItemGroupIcon",{styles:this.css.projectListItemGroupIcon,title:this.lp.icon.group}).inject(projectListItemIconContainer);
-        projectListItemGroupIcon.addEvents({
-            click:function(e){
-                this.getProject(d.id,function(json){
-                    var pdata = json;
-                    var data = {groups:json.groups};
-                    MWF.xDesktop.requireApp("TeamWork", "GroupSelect", function(){
-                        var gs = new MWF.xApplication.TeamWork.GroupSelect(this.container, projectListItemGroupIcon, this.app, data, {
-                            axis : "y",
-                            nodeStyles : {
-                                "min-width":"190px",
-                                "z-index" : "102"
-                            },
-                            onClose:function(rs){
-                                if(rs){
-                                    var ddata={
-                                        id:pdata.id,
-                                        title:pdata.title,
-                                        description:pdata.description,
-                                        groups:rs
-                                    };
-
-                                    this.rootActions.ProjectAction.save(ddata,function(json){
-                                        //debugger;
-                                    }.bind(this))
-                                }
-                            }.bind(this)
+        if(!d.deleted){ // not deleted
+            var projectListItemFavIcon = new Element("div.projectListItemFavIcon",{styles:this.css.projectListItemFavIcon,title:this.lp.icon.star}).inject(projectListItemIconContainer);
+            projectListItemFavIcon.addEvents({
+                click:function(e){
+                    _self.setFav(d,function(data){
+                        _self.actions.get(data.data.id,function(json){
+                            _self.loadSingleListItem(container,json.data)
                         });
-                        gs.load();
+                        _self.createNavi();
+                    });
+                    if(projectListItemFavIcon.getStyle("background-image").indexOf("icon_wdxx_click.png")>-1){
+                        projectListItemFavIcon.setStyles({
+                            "background-image":"url(../x_component_TeamWork/$ProjectList/default/icon/icon_wdxx_1.png)"
+                        })
+                    }else{
+                        projectListItemFavIcon.setStyles({
+                            "background-image":"url(../x_component_TeamWork/$ProjectList/default/icon/icon_wdxx_click.png)"
+                        })
+                    }
+                    e.stopPropagation();
+                }
+            });
+
+            if(d.star){
+                projectListItemFavIcon.setStyles({
+                    "background-image":"url(../x_component_TeamWork/$ProjectList/default/icon/icon_wdxx_click.png)"
+                });
+            }
+
+            var projectListItemGroupIcon = new Element("div.projectListItemGroupIcon",{styles:this.css.projectListItemGroupIcon,title:this.lp.icon.group}).inject(projectListItemIconContainer);
+            projectListItemGroupIcon.addEvents({
+                click:function(e){
+                    this.getProject(d.id,function(json){
+                        var pdata = json;
+                        var data = {groups:json.groups};
+                        MWF.xDesktop.requireApp("TeamWork", "GroupSelect", function(){
+                            var gs = new MWF.xApplication.TeamWork.GroupSelect(this.container, projectListItemGroupIcon, this.app, data, {
+                                axis : "y",
+                                nodeStyles : {
+                                    "min-width":"190px",
+                                    "z-index" : "102"
+                                },
+                                onClose:function(rs){
+                                    if(rs){
+                                        var ddata={
+                                            id:pdata.id,
+                                            title:pdata.title,
+                                            description:pdata.description,
+                                            groups:rs
+                                        };
+
+                                        this.rootActions.ProjectAction.save(ddata,function(json){
+                                            //debugger;
+                                        }.bind(this))
+                                    }
+                                }.bind(this)
+                            });
+                            gs.load();
+                        }.bind(this));
                     }.bind(this));
-                }.bind(this));
 
-                e.stopPropagation();
-            }.bind(this)
-        });
+                    e.stopPropagation();
+                }.bind(this)
+            });
+        }else{
+            var projectBlockItemIconTrueRemove = new Element("div.projectBlockItemIconTrueRemove",{styles:this.css.projectListItemRemoveTrueGreyIcon,title:this.lp.icon.remove}).inject(projectListItemIconContainer);
+            projectBlockItemIconTrueRemove.addEvents({
+                click:function(e){
+                    _self.app.confirm("warn",e,_self.app.lp.common.confirm.removeTitle,_self.app.lp.common.confirm.removeTrue,300,120,function(){
+                        _self.rootActions.ProjectAction.remove(d.id,function(){
+                            _self.openItem({"type":"remove"});
+                            _self.createNavi()
+                        }.bind(this));
 
+                        this.close();
+
+
+                    },function(){
+                        this.close();
+
+                    });
+
+                    e.stopPropagation();
+                }
+            })
+        }
 
         if(d.control.founder){
             var projectListItemSettingIcon = new Element("div.projectListItemSettingIcon",{styles:this.css.projectListItemSettingIcon,title:this.lp.icon.setting}).inject(projectListItemIconContainer);
@@ -1101,25 +1152,6 @@ MWF.xApplication.TeamWork.ProjectList = new Class({
             });
         }
 
-        // if(d.control.delete){
-        //     var projectListItemRemoveIcon = new Element("div.projectListItemRemoveIcon",{styles:this.css.projectListItemRemoveIcon}).inject(projectListItemIconContainer);
-        //     projectListItemRemoveIcon.addEvents({
-        //         click:function(e){
-        //             _self.app.confirm("warn",e,_self.app.lp.common.confirm.removeTitle,_self.app.lp.common.confirm.removeContent,300,120,function(){
-        //                 var id = d.id;
-        //                 _self.actions.delete(id,function(){
-        //                     //刷新代码
-        //                     this.close();
-        //                     _self.reload();
-        //                 }.bind(this));
-        //             },function(){
-        //                 this.close();
-        //             });
-        //
-        //             e.stopPropagation();
-        //         }
-        //     });
-        // }
     },
     setFav:function(d,callback){
         if(d.star){

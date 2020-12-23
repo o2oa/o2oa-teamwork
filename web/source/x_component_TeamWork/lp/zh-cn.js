@@ -66,7 +66,8 @@ MWF.xApplication.TeamWork.LP = {
 		"icon":{
 			"star":"星标",
 			"setting":"设置",
-			"group":"分组"
+			"group":"分组",
+			"remove":"删除"
 		}
 	},
 	"newProject":{
@@ -346,7 +347,8 @@ MWF.xApplication.TeamWork.LP = {
 			"removeTitle":"删除",
 			"removeContent":"确认删除？",
 			"replaceTitle":"替换",
-			"replaceContent":"确认替换？"
+			"replaceContent":"确认替换？",
+			"removeTrue":"该项目及相关的任务会从系统中删除无法找回，确认删除？"
 		}
 	}
 };
