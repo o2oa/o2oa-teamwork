@@ -11,6 +11,7 @@ D:\o2oaLocal\o2oa\o2server\x_teamwork_assemble_control\src\main\java\com\x\teamw
 D:\o2oaLocal\o2oa\o2server\x_teamwork_assemble_control\src\main\java\com\x\teamwork\assemble\control\service\TaskGroupService.java
 D:\o2oaLocal\o2oa\o2server\x_teamwork_assemble_control\src\main\java\com\x\teamwork\assemble\control\jaxrs\config\SystemConfigAction.java
 D:\o2oaLocal\o2oa\o2server\x_teamwork_assemble_control\src\main\java\com\x\teamwork\assemble\control\jaxrs\extfield\TaskNotExistsException.java
+D:\o2oaLocal\o2oa\o2server\x_teamwork_assemble_control\src\main\java\com\x\teamwork\assemble\control\jaxrs\project\ActionRemove.java
 D:\o2oaLocal\o2oa\o2server\x_teamwork_assemble_control\src\main\java\com\x\teamwork\assemble\control\jaxrs\task\ActionViewMyExecutListNextWithFilter.java
 D:\o2oaLocal\o2oa\o2server\x_teamwork_assemble_control\src\main\java\com\x\teamwork\assemble\control\jaxrs\projectTemplate\WrapOutControl.java
 D:\o2oaLocal\o2oa\o2server\x_teamwork_assemble_control\src\main\java\com\x\teamwork\assemble\control\service\TaskTagService.java

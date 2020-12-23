@@ -164,7 +164,7 @@ class ProjectService {
 	 * 根据项目标识删除项目信息
 	 * @param emc
 	 * @param id
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	protected void delete(EntityManagerContainer emc, String id ) throws Exception {
 		Business business = new Business( emc );
@@ -178,20 +178,58 @@ class ProjectService {
 				//改为软删除
 				project.setDeleted(true);
 				emc.check( project , CheckPersistType.all );
-			}			
+			}
 			//还需要删除所有的Task
 			List<String> ids = business.taskFactory().listByProject( id );
 			List<Task> tasks = business.taskFactory().list(ids);
 			if( ListTools.isNotEmpty(tasks)) {
 				for( Task task : tasks ) {
-					//this.remove( emc, task.getId() ); 
+					//this.remove( emc, task.getId() );
 					task.setRelation(true);
-					emc.check( task, CheckPersistType.all );	
+					emc.check( task, CheckPersistType.all );
 				}
 			}
 			emc.commit();
 		}
 	}
+
+	/**
+	 * 根据项目标识删除项目信息（回收站中删除-物理删除）
+	 * @param emc
+	 * @param id
+	 * @throws Exception
+	 */
+	protected void recycle(EntityManagerContainer emc, String id ) throws Exception {
+		Business business = new Business( emc );
+		Project project = emc.find( id, Project.class );
+		if( project != null ) {
+			//这里要先递归删除所有的任务信息
+			emc.beginTransaction( Task.class );
+			emc.beginTransaction( Project.class );
+			emc.beginTransaction( Review.class );
+			emc.beginTransaction( TaskDetail.class );
+			emc.beginTransaction( TaskListRele.class );
+			emc.beginTransaction( TaskGroupRele.class );
+
+			if( project != null ) {
+				emc.remove( project , CheckRemoveType.all );
+				//project.setDeleted(true);
+				emc.check( project , CheckPersistType.all );
+			}
+			//还需要删除所有的Task
+			List<String> ids = business.taskFactory().listByProject( id );
+			List<Task> tasks = business.taskFactory().list(ids);
+			if( ListTools.isNotEmpty(tasks)) {
+				for( Task task : tasks ) {
+					this.remove( emc, task.getId() );
+					//task.setRelation(true);
+					//emc.check( task, CheckPersistType.all );
+				}
+			}
+			emc.commit();
+		}
+	}
+
 	/**
 	 * 根据工作任务标识删除工作任务信息（物理删除）
 	 * @param emc
@@ -199,13 +237,13 @@ class ProjectService {
 	 * @throws Exception 
 	 */
 	public void remove( EntityManagerContainer emc, String flag ) throws Exception {
-		emc.beginTransaction( Task.class );
+		//emc.beginTransaction( Task.class );
 /*		emc.beginTransaction( Review.class );
 		emc.beginTransaction( TaskDetail.class );
 		emc.beginTransaction( TaskListRele.class );
 		emc.beginTransaction( TaskGroupRele.class );*/
 		removeTaskWithChildren( emc, flag);		
-		emc.commit();
+		//emc.commit();
 	}
 	/**
 	 * 根据工作任务标识删除工作任务信息( 物理删除 )
@@ -224,11 +262,12 @@ class ProjectService {
 			}
 		}
 		
-		/*//任务列表中的关联信息
+		//任务列表中的关联信息
 		List<TaskListRele> listReles = business.taskListFactory().listReleWithTask(  id );
 		if( ListTools.isNotEmpty( listReles )) {
 			for( TaskListRele taskListRele : listReles ) {
 				emc.remove( taskListRele , CheckRemoveType.all );
+				emc.check( taskListRele, CheckPersistType.all );
 			}
 		}
 		
@@ -237,6 +276,7 @@ class ProjectService {
 		if( ListTools.isNotEmpty( groupReles )) {
 			for( TaskGroupRele taskGroupRele : groupReles ) {
 				emc.remove( taskGroupRele , CheckRemoveType.all );
+				emc.check( taskGroupRele, CheckPersistType.all );
 			}
 		}
 		TaskDetail taskDetail = emc.find( id, TaskDetail.class );
@@ -251,23 +291,23 @@ class ProjectService {
 				reviewList = emc.list( Review.class, batch );
 				if( ListTools.isNotEmpty( reviewList )) {
 					for( Review review : reviewList ) {
-						//emc.remove( review, CheckRemoveType.all );
+						emc.remove( review, CheckRemoveType.all );
 						//改为软删除
-						review.setDeleted(true);
+						//review.setDeleted(true);
 						emc.check( review, CheckPersistType.all );
 					}
 				}
 			}
 		}
 		if( taskDetail != null ) {
-		emc.remove( taskDetail , CheckRemoveType.all );
-		}*/
+			emc.remove( taskDetail , CheckRemoveType.all );
+			emc.check( taskDetail, CheckPersistType.all );
+		}
 		Task task = emc.find( id, Task.class );
 		if( task != null ) {
-			//emc.remove( task , CheckRemoveType.all );
+			emc.remove( task , CheckRemoveType.all );
 			//改为软删除
-			//task.setDeleted(true); 
-			task.setRelation(true);
+			//task.setRelation(true);
 			emc.check( task, CheckPersistType.all );	
 		}
 		

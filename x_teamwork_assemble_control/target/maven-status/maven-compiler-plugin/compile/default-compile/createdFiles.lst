@@ -36,6 +36,7 @@ com\x\teamwork\assemble\control\jaxrs\list\ActionAddTask2ListWithOrderNumber$Wi.
 com\x\teamwork\assemble\control\jaxrs\projectTemplate\ActionListNextWithFilter$Wi.class
 com\x\teamwork\assemble\control\jaxrs\taskview\ActionDelete$Wo.class
 com\x\teamwork\assemble\control\factory\StatisticFactory.class
+com\x\teamwork\assemble\control\jaxrs\project\ActionRemove.class
 com\x\teamwork\assemble\control\jaxrs\task\ActionListMyTaskWithTaskList$ResultObject.class
 com\x\teamwork\assemble\control\jaxrs\task\ActionManagerUpdate$Wo.class
 com\x\teamwork\assemble\control\jaxrs\global\ActionProjectConfigDelete.class
@@ -285,6 +286,7 @@ com\x\teamwork\assemble\control\jaxrs\tasktag\ActionAddTagRele.class
 com\x\teamwork\assemble\control\factory\ProjectGroupFactory.class
 com\x\teamwork\assemble\control\jaxrs\tasktag\ActionListWithProject.class
 com\x\teamwork\assemble\control\service\TaskGroupPersistService.class
+com\x\teamwork\assemble\control\jaxrs\project\ActionRemove$Wo.class
 com\x\teamwork\assemble\control\jaxrs\projectgroup\ActionList$Wo.class
 com\x\teamwork\assemble\control\jaxrs\projectTemplate\ActionGet$Wo.class
 com\x\teamwork\assemble\control\jaxrs\project\ActionListPageWithFilter.class
@@ -578,6 +580,7 @@ com\x\teamwork\assemble\control\jaxrs\attachment\ActionListWithProject.class
 com\x\teamwork\assemble\control\jaxrs\attachment\AttachmentQueryByIdException.class
 com\x\teamwork\assemble\control\jaxrs\task\TaskGroupNotExistsException.class
 com\x\teamwork\assemble\control\jaxrs\project\ActionStatisticMyProjects.class
+com\x\teamwork\assemble\control\jaxrs\project\ActionRemove$WoDynamic.class
 com\x\teamwork\assemble\control\jaxrs\task\ActionStatisticMyTaskViews$Wo.class
 com\x\teamwork\assemble\control\factory\ProjectGroupReleFactory.class
 com\x\teamwork\assemble\control\jaxrs\attachment\ExceptionQueryProjectById.class
