@@ -24,7 +24,7 @@ MWF.xApplication.TeamWork.Stat = new Class({
 
         this.data = data;
     },
-    load: function () {
+    load: function () { //
         this.container.empty();
         if(this.options.mvcStyle) this.container.loadCss(this.stylePath);
 
