@@ -147,7 +147,8 @@ public class TaskFactory extends AbstractFactory {
 		CriteriaQuery<Task> cq = cb.createQuery(Task.class);
 		Root<Task> root = cq.from(Task.class);
 		Predicate p = cb.equal(  root.get( Task_.parent ), taskId );
-		p = cb.and( p, cb.isFalse( root.get(Task_.completed )));
+		//p = cb.and( p, cb.isFalse( root.get(Task_.completed )));
+		p = cb.and( p, cb.equal(  root.get( Task_.workStatus ), TaskStatuType.processing.name()));
 		return em.createQuery(cq.where(p)).getResultList();
 	}
 
