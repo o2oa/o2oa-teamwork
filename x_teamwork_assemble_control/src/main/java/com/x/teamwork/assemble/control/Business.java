@@ -320,13 +320,12 @@ public class Business {
 
 	public boolean isManager(EffectivePerson person) throws Exception {
 		// 如果用户的身份是平台的超级管理员，那么就是超级管理员权限
-		if (person.isManager()) {
-			return true;
-		}
 		if ("xadmin".equalsIgnoreCase(person.getDistinguishedName())) {
 			return true;
 		}
-		if (isHasPlatformRole(person.getDistinguishedName(), "TeamWorkManager@TeamWorkManager@R")) {
+
+		if (organization().person().hasRole(person, OrganizationDefinition.Manager,
+				OrganizationDefinition.TeamWorkManager)) {
 			return true;
 		}
 		return false;
