@@ -1,11 +1,11 @@
 module.exports = {
-    "f":{
-        'host': '127.0.0.1',
-        'user': 'username',
-        'pass': 'password',
-        "port": 22,
-        "remotePath": "/",
-        "upload":"sftp",
-        "dest": "dest"
-    }
+     "f": {
+         'host': '172.16.92.11',
+         'user': 'root',
+         'pass': 'o2No.one@)@)',
+         "port": 22,
+         "remotePath": "/data/o2server/servers/webServer/",
+         "upload": "sftp",
+         "dest": "dest"
+     }
 };
