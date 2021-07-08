@@ -7,6 +7,7 @@ MWF.xApplication.TeamWork.LP = {
 		"navi":{
 			"template":"模板管理",
 			"priority":"优先级设定",
+			"project": "项目管理",
 			"extField":"自定义字段",
 			"access":"权限管理"
 		},
@@ -30,6 +31,10 @@ MWF.xApplication.TeamWork.LP = {
 			"add":"添加",
 			"success":"保存成功"
 
+		},
+		"project":{
+			"title": "项目管理",
+			"tips": "查询管理所有项目",
 		}
 
 	},

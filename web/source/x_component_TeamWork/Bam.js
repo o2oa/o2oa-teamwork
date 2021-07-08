@@ -104,6 +104,46 @@ MWF.xApplication.TeamWork.Bam = new Class({
         });
         new Element("div.priorityIcon",{ styles: this.css.priorityIcon }).inject(this.priorityDiv);
         new Element("div.priorityText",{styles: this.css.priorityText, text: this.lp.navi.priority}).inject(this.priorityDiv);
+        
+        //项目管理
+        this.projectDiv = new Element("div.projectDiv", {
+            styles: this.css.naviItem
+        }).inject(this.naviLayout);
+        this.projectDiv.addEvents({
+            mouseenter:function(){
+                if (this.curNavi == this.projectDiv) return;
+                this.projectDiv.setStyles({
+                    "border-left": "2px solid #1b9aee",
+                    "color": "#000000"
+                });
+            }.bind(this),
+            mouseleave:function(){
+                if (this.curNavi == this.projectDiv) return;
+                this.projectDiv.setStyles({
+                    "border-left": "2px solid #ffffff",
+                    "color": "#595959"
+                });
+            }.bind(this),
+            click:function(){
+                if(this.curNavi)this.curNavi.setStyles({"border-left":"2px solid #ffffff","color":"#595959"});
+                this.curNavi = this.projectDiv;
+                this.curNavi.setStyles({
+                    "border-left": "2px solid #0171c2",
+                    "color": "#000000"
+                });
+                this.createProjectLayout();
+
+            }.bind(this)
+        });
+        new Element("div.priorityIcon", {
+            styles: this.css.projectIcon
+        }).inject(this.projectDiv);
+        new Element("div.priorityText", {
+            styles: this.css.projectText,
+            text: this.lp.navi.project
+        }).inject(this.projectDiv);
+
+
 
     /*
         //自定义字段
@@ -652,5 +692,102 @@ MWF.xApplication.TeamWork.Bam = new Class({
             this.np.open();
         }.bind(this));
 
+    },
+
+    createProjectLayout:function(){
+        var _self = this;
+        this.contentLayout.empty();
+
+        var projectTop = new Element("div.projectTop", {
+            styles: this.css.projectTop
+        }).inject(this.contentLayout);
+        var projectTopContent = new Element("div.projectTopContent", {
+            styles: this.css.projectTopContent
+        }).inject(projectTop);
+        var projectTopTitle = new Element("div.projectTopTitle", {
+            styles: this.css.projectTopTitle,
+            text: this.lp.project.title
+        }).inject(projectTopContent);
+        var projectTopDes = new Element("div.projectTopDes", {
+            styles: this.css.projectTopDes,
+            text: this.lp.project.tips
+        }).inject(projectTopContent);
+
+        this.projectContainer = new Element("div.projectContainer", {
+            styles: this.css.projectContainer
+        }).inject(this.contentLayout);
+
+        var searchLayout = new Element("div.searchLayout", {
+            styles: this.css.searchLayout
+        }).inject(this.projectContainer);
+
+        var projectItemLayout = this.projectItemLayout = new Element("div.projectItemLayout", {
+            styles: this.css.projectItemLayout
+        }).inject(this.projectContainer);
+
+        var projectItemHead = new Element("div.projectItemHead", {
+            styles: this.css.projectItemHead
+        }).inject(projectItemLayout);
+        new Element("div.projectItemTitle", {
+            styles: this.css.projectItemTitle,
+            text: "项目名称"
+        }).inject(projectItemHead);
+        new Element("div.projectItemAction", {
+            styles: this.css.projectItemAction
+        }).inject(projectItemHead);
+        new Element("div.projectItemTaskCount", {
+            styles: this.css.projectItemTaskCount,
+            text: "任务总数"
+        }).inject(projectItemHead);
+        new Element("div.projectItemCreateTime", {
+            styles: this.css.projectItemCreateTime,
+            text: "创建时间"
+        }).inject(projectItemHead);
+        new Element("div.projectItemCreator", {
+            styles: this.css.projectItemCreator,
+            text: "创建者"
+        }).inject(projectItemHead);
+        
+        //this.app.setLoading(this.projectContainer);
+        this.rootActions.ProjectAction.listPageWithFilter(1,20,{},function(json){
+            json.data.each(function(data){
+                this.createProjectItem(data)
+            }.bind(this))
+        }.bind(this))
+
+
+
+        //this.app.setLoading(this.projectContainer);
+
+
+        // this.rootActions.ProjectTemplateAction.listNextWithFilter("(0)", 100, {}, function (json) {
+        //     this.templateContainer.empty();
+        //     json.data.each(function (data) {
+        //         this.createTemplateItem(data);
+        //     }.bind(this))
+        // }.bind(this))
+    },
+    createProjectItem:function(data){
+        var node = this.projectItemLayout;
+        var projectItem = new Element("div.projectItem",{styles:this.css.projectItem}).inject(node);
+        new Element("div.projectItemTitle", {
+            styles: this.css.projectItemTitle,
+            text: data.title
+        }).inject(projectItem);
+        new Element("div.projectItemAction", {
+            styles: this.css.projectItemAction
+        }).inject(projectItem);
+        new Element("div.projectItemTaskCount", {
+            styles: this.css.projectItemTaskCount,
+            text: data.count || 88
+        }).inject(projectItem);
+        new Element("div.projectItemCreateTime", {
+            styles: this.css.projectItemCreateTime,
+            text: data.createTime
+        }).inject(projectItem);
+        new Element("div.projectItemCreator", {
+            styles: this.css.projectItemCreator,
+            text: data.creatorPerson.split("@")[0]
+        }).inject(projectItem);
     }
 });
