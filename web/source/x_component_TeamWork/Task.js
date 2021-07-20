@@ -1722,7 +1722,7 @@ MWF.xApplication.TeamWork.Task = new Class({
             }else if(ct.getFullYear() == now.getFullYear() && ct.getMonth()==now.getMonth() && ct.getDate() == now.getDate()-1){
                 cttext = "昨天"+(ct.getHours()<10?("0"+ct.getHours()):ct.getHours())+":"+(ct.getMinutes()<10?"0"+ct.getMinutes():ct.getMinutes());
             }else{
-                cttext = (ct.getMonth()+1) + "月"+ct.getDay()+"日"
+                cttext = (ct.getMonth()+1) + "月"+ct.getDate()+"日"
             }
 
             var sepd = ct.getTime() - now.getTime();

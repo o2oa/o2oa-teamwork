@@ -35,6 +35,13 @@ MWF.xApplication.TeamWork.LP = {
 		"project":{
 			"title": "项目管理",
 			"tips": "查询管理所有项目",
+			"title":"项目名称",
+			"creator":"创建者",
+			"createTime":"创建时间",
+			"total":"任务总数",
+			"open":"查看",
+			"remove":"删除",
+			"searchHolder":"项目搜索"
 		}
 
 	},

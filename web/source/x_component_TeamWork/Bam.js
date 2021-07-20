@@ -106,6 +106,7 @@ MWF.xApplication.TeamWork.Bam = new Class({
         new Element("div.priorityText",{styles: this.css.priorityText, text: this.lp.navi.priority}).inject(this.priorityDiv);
         
         //项目管理
+        
         this.projectDiv = new Element("div.projectDiv", {
             styles: this.css.naviItem
         }).inject(this.naviLayout);
@@ -143,7 +144,7 @@ MWF.xApplication.TeamWork.Bam = new Class({
             text: this.lp.navi.project
         }).inject(this.projectDiv);
 
-
+        
 
     /*
         //自定义字段
@@ -696,6 +697,10 @@ MWF.xApplication.TeamWork.Bam = new Class({
 
     createProjectLayout:function(){
         var _self = this;
+        this.curPage = 0;
+        this.curCount = 0;
+
+
         this.contentLayout.empty();
 
         var projectTop = new Element("div.projectTop", {
@@ -717,77 +722,118 @@ MWF.xApplication.TeamWork.Bam = new Class({
             styles: this.css.projectContainer
         }).inject(this.contentLayout);
 
-        var searchLayout = new Element("div.searchLayout", {
-            styles: this.css.searchLayout
+        var projectTableLayout = this.projectTableLayout = new Element("div.projectTableLayout", {
+            styles: this.css.projectTableLayout
         }).inject(this.projectContainer);
 
-        var projectItemLayout = this.projectItemLayout = new Element("div.projectItemLayout", {
-            styles: this.css.projectItemLayout
-        }).inject(this.projectContainer);
+        projectTableLayout.addEvents({
+            scroll:function(){
+                var sTop = this.getScrollTop();
+                var sHeight = this.getScrollHeight();
+                var cHeight = this.getHeight();
 
-        var projectItemHead = new Element("div.projectItemHead", {
-            styles: this.css.projectItemHead
-        }).inject(projectItemLayout);
-        new Element("div.projectItemTitle", {
-            styles: this.css.projectItemTitle,
-            text: "项目名称"
-        }).inject(projectItemHead);
-        new Element("div.projectItemAction", {
-            styles: this.css.projectItemAction
-        }).inject(projectItemHead);
-        new Element("div.projectItemTaskCount", {
-            styles: this.css.projectItemTaskCount,
-            text: "任务总数"
-        }).inject(projectItemHead);
-        new Element("div.projectItemCreateTime", {
-            styles: this.css.projectItemCreateTime,
-            text: "创建时间"
-        }).inject(projectItemHead);
-        new Element("div.projectItemCreator", {
-            styles: this.css.projectItemCreator,
-            text: "创建者"
-        }).inject(projectItemHead);
+                //console.log("top="+sTop);
+                //console.log("scrollheight="+sHeight);
+                //console.log("cHeight="+cHeight);
+
+                if(sHeight - sTop < cHeight+2){
+                    if(!_self.pageLoading && _self.curCount<_self.projectTotal){
+                        //console.log("doooooooooooooo");
+                        _self.loadProjectData()
+                    }
+                }
+            }
+        })
+
+        var searchLayout = new Element("div.searchLayout", {styles: this.css.searchLayout}).inject(this.projectTableLayout);
+        this.searchInput = new Element("input",{styles:this.css.searchInput,placeholder:this.lp.project.searchHolder}).inject(searchLayout);
+        var searchAction = new Element("div.searchAction",{styles:this.css.searchAction}).inject(searchLayout);
+        searchAction.addEvents({
+            "click":function(){
+                var value = _self.searchInput.get("value").trim();
+                if(value=="") return;
+                searchReset.show();
+            }
+        })
+        var searchReset = new Element("div.searchReset",{styles:this.css.searchReset}).inject(searchLayout);
+        searchReset.addEvents({
+            "click":function(){
+                _self.searchInput.set("value","");
+                this.hide();
+            }
+        })
+
+        var table = this.projectTable = new Element("table.projectTable",{styles:this.css.projectTable}).inject(this.projectTableLayout);
+
+        var tr = new Element("tr.tr",{styles:this.css.projectTr}).inject(table);
+        new Element("th.th",{styles:this.css.projectTh,text:this.lp.project.title}).inject(tr);
+        new Element("th.th",{styles:this.css.projectTh,text:this.lp.project.creator}).inject(tr);
+        new Element("th.th",{styles:this.css.projectTh,text:this.lp.project.createTime}).inject(tr);
+        new Element("th.th",{styles:this.css.projectTh,text:this.lp.project.total}).inject(tr);
+        new Element("th.th",{styles:this.css.projectTh}).inject(tr);
+
+        this.loadProjectData();
         
-        //this.app.setLoading(this.projectContainer);
-        this.rootActions.ProjectAction.listPageWithFilter(1,20,{},function(json){
+    },
+    loadProjectData:function(filter){
+        
+        var page = this.curPage || 0;
+        page ++;
+        this.curCount = this.curCount || 0;
+        var pageCount = 30;
+        var filter = filter || {};
+        this.pageLoading = true;
+        
+        this.rootActions.ProjectAction.listPageWithFilter(page,pageCount,filter,function(json){ 
+            this.curPage = page;
+            this.projectTotal = json.count;
             json.data.each(function(data){
-                this.createProjectItem(data)
-            }.bind(this))
+                this.createProjectItem(data);
+                this.curCount ++;
+            }.bind(this));
+            this.pageLoading = false;
         }.bind(this))
-
-
-
-        //this.app.setLoading(this.projectContainer);
-
-
-        // this.rootActions.ProjectTemplateAction.listNextWithFilter("(0)", 100, {}, function (json) {
-        //     this.templateContainer.empty();
-        //     json.data.each(function (data) {
-        //         this.createTemplateItem(data);
-        //     }.bind(this))
-        // }.bind(this))
     },
     createProjectItem:function(data){
-        var node = this.projectItemLayout;
-        var projectItem = new Element("div.projectItem",{styles:this.css.projectItem}).inject(node);
-        new Element("div.projectItemTitle", {
-            styles: this.css.projectItemTitle,
-            text: data.title
-        }).inject(projectItem);
-        new Element("div.projectItemAction", {
-            styles: this.css.projectItemAction
-        }).inject(projectItem);
-        new Element("div.projectItemTaskCount", {
-            styles: this.css.projectItemTaskCount,
-            text: data.count || 88
-        }).inject(projectItem);
-        new Element("div.projectItemCreateTime", {
-            styles: this.css.projectItemCreateTime,
-            text: data.createTime
-        }).inject(projectItem);
-        new Element("div.projectItemCreator", {
-            styles: this.css.projectItemCreator,
-            text: data.creatorPerson.split("@")[0]
-        }).inject(projectItem);
+        var node = this.projectTable;
+
+        var tr = new Element("tr",{styles:this.css.projectTr}).inject(node);
+        tr.addEvents({
+            mouseover:function(){
+                this.setStyles({"background-color":"#f2f5f7"})
+            },
+            mouseout:function(){
+                this.setStyles({"background-color":""})
+            }
+        })
+        var title = new Element("td",{styles:this.css.projectItemTitle,text:data.title}).inject(tr);
+        title.addEvents({
+            click:function(){
+                this.openProject(data)
+            }.bind(this)
+        })
+
+        new Element("td",{styles:this.css.projectItemCreator,text:data.creatorPerson.split("@")[0]}).inject(tr);
+        new Element("td",{styles:this.css.projectItemCreateTime,text:data.createTime}).inject(tr);
+        new Element("td",{styles:this.css.projectItemTaskCount,text:data.count||88}).inject(tr);
+        var action = new Element("td",{styles:this.css.projectItemAction}).inject(tr);
+        var mind = new Element("span.mind",{styles:this.css.actionTxt,text:this.lp.project.open}).inject(action);
+        mind.addEvents({
+            "click":function(){
+                this.openMind(data);
+            }.bind(this)
+        })
+    },
+    openProject:function(d){
+        MWF.xDesktop.requireApp("TeamWork", "Project", function(){
+            var p = new MWF.xApplication.TeamWork.Project(this.container,this.app,d,{
+
+                }
+            );
+            p.load();
+        }.bind(this));
+    },
+    openMind:function(data){
+        
     }
 });
