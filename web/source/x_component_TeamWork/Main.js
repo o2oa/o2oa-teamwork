@@ -23,7 +23,7 @@ MWF.xApplication.TeamWork.Main = new Class({
 		this.lp = MWF.xApplication.TeamWork.LP;
 	},
 
-	loadApplication: function(callback){
+	loadApplication: function(callback){ 
 		this.user = layout.desktop.session.user.name;
 		this.distinguishedName = layout.desktop.session.user.distinguishedName;
 

@@ -104,6 +104,47 @@ MWF.xApplication.TeamWork.Bam = new Class({
         });
         new Element("div.priorityIcon",{ styles: this.css.priorityIcon }).inject(this.priorityDiv);
         new Element("div.priorityText",{styles: this.css.priorityText, text: this.lp.navi.priority}).inject(this.priorityDiv);
+        
+        //项目管理
+        
+        this.projectDiv = new Element("div.projectDiv", {
+            styles: this.css.naviItem
+        }).inject(this.naviLayout);
+        this.projectDiv.addEvents({
+            mouseenter:function(){
+                if (this.curNavi == this.projectDiv) return;
+                this.projectDiv.setStyles({
+                    "border-left": "2px solid #1b9aee",
+                    "color": "#000000"
+                });
+            }.bind(this),
+            mouseleave:function(){
+                if (this.curNavi == this.projectDiv) return;
+                this.projectDiv.setStyles({
+                    "border-left": "2px solid #ffffff",
+                    "color": "#595959"
+                });
+            }.bind(this),
+            click:function(){
+                if(this.curNavi)this.curNavi.setStyles({"border-left":"2px solid #ffffff","color":"#595959"});
+                this.curNavi = this.projectDiv;
+                this.curNavi.setStyles({
+                    "border-left": "2px solid #0171c2",
+                    "color": "#000000"
+                });
+                this.createProjectLayout();
+
+            }.bind(this)
+        });
+        new Element("div.priorityIcon", {
+            styles: this.css.projectIcon
+        }).inject(this.projectDiv);
+        new Element("div.priorityText", {
+            styles: this.css.projectText,
+            text: this.lp.navi.project
+        }).inject(this.projectDiv);
+
+        
 
     /*
         //自定义字段
@@ -652,5 +693,147 @@ MWF.xApplication.TeamWork.Bam = new Class({
             this.np.open();
         }.bind(this));
 
+    },
+
+    createProjectLayout:function(){
+        var _self = this;
+        this.curPage = 0;
+        this.curCount = 0;
+
+
+        this.contentLayout.empty();
+
+        var projectTop = new Element("div.projectTop", {
+            styles: this.css.projectTop
+        }).inject(this.contentLayout);
+        var projectTopContent = new Element("div.projectTopContent", {
+            styles: this.css.projectTopContent
+        }).inject(projectTop);
+        var projectTopTitle = new Element("div.projectTopTitle", {
+            styles: this.css.projectTopTitle,
+            text: this.lp.project.title
+        }).inject(projectTopContent);
+        var projectTopDes = new Element("div.projectTopDes", {
+            styles: this.css.projectTopDes,
+            text: this.lp.project.tips
+        }).inject(projectTopContent);
+
+        this.projectContainer = new Element("div.projectContainer", {
+            styles: this.css.projectContainer
+        }).inject(this.contentLayout);
+
+        var projectTableLayout = this.projectTableLayout = new Element("div.projectTableLayout", {
+            styles: this.css.projectTableLayout
+        }).inject(this.projectContainer);
+
+        projectTableLayout.addEvents({
+            scroll:function(){
+                var sTop = this.getScrollTop();
+                var sHeight = this.getScrollHeight();
+                var cHeight = this.getHeight();
+
+                //console.log("top="+sTop);
+                //console.log("scrollheight="+sHeight);
+                //console.log("cHeight="+cHeight);
+
+                if(sHeight - sTop < cHeight+2){
+                    if(!_self.pageLoading && _self.curCount<_self.projectTotal){
+                        //console.log("doooooooooooooo");
+                        _self.loadProjectData()
+                    }
+                }
+            }
+        })
+
+        var searchLayout = new Element("div.searchLayout", {styles: this.css.searchLayout}).inject(this.projectTableLayout);
+        this.searchInput = new Element("input",{styles:this.css.searchInput,placeholder:this.lp.project.searchHolder}).inject(searchLayout);
+        var searchAction = new Element("div.searchAction",{styles:this.css.searchAction}).inject(searchLayout);
+        searchAction.addEvents({
+            "click":function(){
+                var value = _self.searchInput.get("value").trim();
+                if(value=="") return;
+                searchReset.show();
+            }
+        })
+        var searchReset = new Element("div.searchReset",{styles:this.css.searchReset}).inject(searchLayout);
+        searchReset.addEvents({
+            "click":function(){
+                _self.searchInput.set("value","");
+                this.hide();
+            }
+        })
+
+        var table = this.projectTable = new Element("table.projectTable",{styles:this.css.projectTable}).inject(this.projectTableLayout);
+
+        var tr = new Element("tr.tr",{styles:this.css.projectTr}).inject(table);
+        new Element("th.th",{styles:this.css.projectTh,text:this.lp.project.title}).inject(tr);
+        new Element("th.th",{styles:this.css.projectTh,text:this.lp.project.creator}).inject(tr);
+        new Element("th.th",{styles:this.css.projectTh,text:this.lp.project.createTime}).inject(tr);
+        new Element("th.th",{styles:this.css.projectTh,text:this.lp.project.total}).inject(tr);
+        new Element("th.th",{styles:this.css.projectTh}).inject(tr);
+
+        this.loadProjectData();
+        
+    },
+    loadProjectData:function(filter){
+        
+        var page = this.curPage || 0;
+        page ++;
+        this.curCount = this.curCount || 0;
+        var pageCount = 30;
+        var filter = filter || {};
+        this.pageLoading = true;
+        
+        this.rootActions.ProjectAction.listPageWithFilter(page,pageCount,filter,function(json){ 
+            this.curPage = page;
+            this.projectTotal = json.count;
+            json.data.each(function(data){
+                this.createProjectItem(data);
+                this.curCount ++;
+            }.bind(this));
+            this.pageLoading = false;
+        }.bind(this))
+    },
+    createProjectItem:function(data){
+        var node = this.projectTable;
+
+        var tr = new Element("tr",{styles:this.css.projectTr}).inject(node);
+        tr.addEvents({
+            mouseover:function(){
+                this.setStyles({"background-color":"#f2f5f7"})
+            },
+            mouseout:function(){
+                this.setStyles({"background-color":""})
+            }
+        })
+        var title = new Element("td",{styles:this.css.projectItemTitle,text:data.title}).inject(tr);
+        title.addEvents({
+            click:function(){
+                this.openProject(data)
+            }.bind(this)
+        })
+
+        new Element("td",{styles:this.css.projectItemCreator,text:data.creatorPerson.split("@")[0]}).inject(tr);
+        new Element("td",{styles:this.css.projectItemCreateTime,text:data.createTime}).inject(tr);
+        new Element("td",{styles:this.css.projectItemTaskCount,text:data.count||88}).inject(tr);
+        var action = new Element("td",{styles:this.css.projectItemAction}).inject(tr);
+        var mind = new Element("span.mind",{styles:this.css.actionTxt,text:this.lp.project.open}).inject(action);
+        mind.addEvents({
+            "click":function(){
+                this.openMind(data);
+            }.bind(this)
+        })
+    },
+    openProject:function(d){
+        MWF.xDesktop.requireApp("TeamWork", "Project", function(){
+            var p = new MWF.xApplication.TeamWork.Project(this.container,this.app,d,{
+
+                }
+            );
+            p.load();
+        }.bind(this));
+    },
+    openMind:function(data){
+        
     }
 });
