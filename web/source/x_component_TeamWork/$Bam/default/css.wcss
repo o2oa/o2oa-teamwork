@@ -463,12 +463,13 @@
         "width":"500px",
         "padding":"0px 0px",
         "height":"30px",
+        "margin-top":"10px",
         "border":"1px solid #cccccc"
     },
     "searchInput":{
         "float":"left",
         "width":"400px",
-        "height":"24px",
+        "height":"28px",
         "border":"0px",
         "text-indent":"2px"
     },
@@ -509,7 +510,8 @@
         "height":"50px",
         "color":"#1b9aee",
         "cursor":"pointer",
-        "min-width":"500px"
+        "min-width":"500px",
+        "padding-left":"5px"
     },
     "projectItemCreator":{
         "height":"50px",
@@ -528,6 +530,18 @@
         "line-height":"50px",
         "text-align":"center",
         "width":"80px"
+    },
+    "projectItemTaskCount":{
+        "height":"50px",
+        "line-height":"50px",
+        "text-align":"center",
+        "width":"80px"
+    },
+    "projectItemTaskStatus":{
+        "height":"50px",
+        "line-height":"50px",
+        "text-align":"center",
+        "width":"50px"
     },
     "projectItemAction":{
         "width":"100px",

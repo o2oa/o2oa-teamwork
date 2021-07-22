@@ -306,7 +306,17 @@ MWF.xApplication.TeamWork.Main = new Class({
 		//taskGroupItemContainer
 		//taskGroupLayout，taskGroupItemContainer  自定义高度
 
-
+		//bam
+		if(this.content.getElement(".bam_mind_container")){
+			var container = this.content.getElement(".bam_mind_container");
+			var size = this.content.getSize();
+			container.setStyles({
+				"width":(size.x-200)+"px",
+				"height":(size.y-200)+"px",
+				"left":"100px",
+				"top":"100px"
+			})
+		}
 
 	},
 });

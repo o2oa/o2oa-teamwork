@@ -39,11 +39,19 @@ MWF.xApplication.TeamWork.LP = {
 			"creator":"创建者",
 			"createTime":"创建时间",
 			"total":"任务总数",
+			"status":"状态",
 			"open":"查看",
+			"minder":"跟踪",
 			"remove":"删除",
-			"searchHolder":"项目搜索"
+			"searchHolder":"项目搜索",
+			"deleted":"已删除",
+			"completed":"已完成",
+			"progress":"进行中",
 		}
 
+	},
+	"minder":{
+		"clickClose":"点击关闭"
 	},
 	"ProjectList":{
 		"navi":{
