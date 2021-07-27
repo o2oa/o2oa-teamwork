@@ -35,7 +35,9 @@ MWF.xApplication.TeamWork.Minder = new Class({
                         "data": {
                             "id": "ccxu85jy16o111110",
                             //"created": 1626771098258,
-                            "text": "呵呵呵呵呵呵呵呵咯咯咯二咯咯咯"
+                            "text": "呵呵呵呵呵呵呵呵咯咯咯二咯咯咯",
+                            "color":"#ff0000"
+                            //'font-size', 'font-family', 'font-weight', 'font-style', 'background', 'color'
                         },
                         "children": [
                             {
@@ -88,7 +90,8 @@ MWF.xApplication.TeamWork.Minder = new Class({
                                 "data": {
                                     "id": "ccxu85jy16o0",
                                     //"created": 1626771098258,
-                                    "text": "每一天要么明天明天明天明天明天明天明天"
+                                    "text": "每一天要么明天明天明天明天明天明天明天",
+                                    "color":"#ff0000"
                                 },
                                 "children": [
                                     {
@@ -178,6 +181,9 @@ MWF.xApplication.TeamWork.Minder = new Class({
             "theme": "fresh-blue",
             "version": "1.4.33"
         }
+
+        this.transformData(this.data);
+        debugger;
     },
     close:function(){
         this.maskDiv.destroy();
@@ -227,26 +233,27 @@ MWF.xApplication.TeamWork.Minder = new Class({
         data.theme = data.theme || this.options.theme;
         data.template = data.template || this.options.template;
 
-        // this.deepestLevel = 0;
-        // km.on("import", function (e) {
-        //     if ( !_self.alreadyBind ) {
-        //         var nodes = km.getAllNode();
-        //         nodes.forEach(function (node) {
-        //             var level = node.getLevel();
-        //             _self.deepestLevel = level > _self.deepestLevel ? level : _self.deepestLevel;
-
-        //             _self.fireEvent( "postLoadNode", node );
-        //         });
-        //         _self.alreadyBind = true;
-        //         if( _self.options.hasNavi )_self.loadNavi();
-        //         _self.fireEvent( "postLoad" , _self );
-        //     }
-        // });
-        // //km.on("execCommand", function(e){
-        // //    if (e.commandName === "template"  ) {
-        // //        _self.moveToCenter();
-        // //    }
-        // //})
+        this.deepestLevel = 0;
+        km.on("import", function (e) {
+            if ( !_self.alreadyBind ) {
+                var nodes = km.getAllNode();
+                nodes.forEach(function (node) {
+                    var level = node.getLevel();
+                    _self.deepestLevel = level > _self.deepestLevel ? level : _self.deepestLevel;
+                    
+                    _self.handleNode(node);
+                    //_self.fireEvent( "postLoadNode", node );
+                });
+                _self.alreadyBind = true;
+                _self.handleKM();
+                //_self.fireEvent( "postLoad" , _self );
+            }
+        });
+        //km.on("execCommand", function(e){
+        //    if (e.commandName === "template"  ) {
+        //        _self.moveToCenter();
+        //    }
+        //})
         // km.on("layoutallfinish",function(){
         //     if( _self.templateChanged || _self.isMovingCenter ){
         //         _self.moveToCenter();
@@ -258,7 +265,20 @@ MWF.xApplication.TeamWork.Minder = new Class({
         km.importJson(data);
         km.execCommand('hand');
     },
-
+    handleNode:function(minderNode){
+        //import单个node完成
+        var cNode = minderNode.getRenderContainer().node;
+        debugger;
+        //minderNode.textContent("xxxxxxxxxxx");
+        cNode.addEventListener("dblclick", function ( ev ) {
+            //alert(22)
+        });
+        
+    },
+    handleKM:function(){
+        //import完成
+        //alert(1)
+    },
     moveToCenter: function(){
         //setTimeout( this._moveToCenter.bind(this) , 100 );
           this._moveToCenter();
@@ -343,6 +363,30 @@ MWF.xApplication.TeamWork.Minder = new Class({
             "left":"100px",
             "top":"100px"
         })
+    },
+    transformData:function(){
+        //this.data;
+
+        this.dealData(this.data.root);
+    },
+    dealData:function(node){ 
+        if(node.data){
+            node.data.title = node.data.text;
+        }
+        
+        var children = node.children;
+        if(children && children.length > 0){
+            children.each(function(child){
+                this.dealData(child);
+            }.bind(this))
+        }
     }
+    // getChildrenData:function(node){
+    //     var result = [];
+    //     if(node.children && node.children.length>0){
+    //         result = node.children;
+    //     }
+    //     return result;
+    // }
 
 });

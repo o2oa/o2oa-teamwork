@@ -341,7 +341,7 @@ MWF.xApplication.TeamWork.LP = {
 		"content":"确定复制该任务？"
 	},
 	"stat":{
-
+		
 	},
 	"common":{
 		"tooltip":{

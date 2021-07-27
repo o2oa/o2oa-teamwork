@@ -5,6 +5,11 @@ MWF.xApplication.TeamWork.options = {
 	executable: true
 };
 
+/*
+* 蓝色 #4a90e2
+* 灰色 #666666
+*/
+
 MWF.xApplication.TeamWork.Main = new Class({
 	Extends: MWF.xApplication.Common.Main,
 	Implements: [Options, Events],

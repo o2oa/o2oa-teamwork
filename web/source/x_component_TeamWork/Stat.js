@@ -7,14 +7,14 @@ MWF.xApplication.TeamWork.Stat = new Class({
         "style": "default",
         "mvcStyle": "style.css"
     },
-    initialize: function (container, app, data, options) {
+    initialize: function (container, app, options) {
         this.setOptions(options);
         this.container = container;
 
-        this.app = app;
+        this.app = app; 
         this.lp = this.app.lp.Stat;
-        //this.actions = this.app.restActions;
-        this.actions = o2.Actions.load("x_teamwork_assemble_control");
+        this.rootActions = this.app.rootActions;
+        this.actions = this.rootActions.StatAction;
 
         this.path = "../x_component_TeamWork/$Stat/";
         this.cssPath = this.path+this.options.style+"/css.wcss";
@@ -22,10 +22,10 @@ MWF.xApplication.TeamWork.Stat = new Class({
 
         if (this.options.mvcStyle) this.stylePath = this.path + this.options.style + "/" + this.options.mvcStyle;
 
-        this.data = data;
+        this.load();
     },
     load: function () { //
-        this.container.empty();
+        this.container.empty(); return;
         if(this.options.mvcStyle) this.container.loadCss(this.stylePath);
 
         var url = this.path+this.options.style+"/view.html";
