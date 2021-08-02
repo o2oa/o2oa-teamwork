@@ -24,164 +24,57 @@ MWF.xApplication.TeamWork.Minder = new Class({
         this._loadCss();
 
         this.data = data;
-        this.data = {
-            "root":{
-                "data":{
-                    "id":"root",
-                    "text":"服务器服务费服务器服务费服务器服务费"
-                },
-                "children":[
-                    {
-                        "data": {
-                            "id": "ccxu85jy16o111110",
-                            //"created": 1626771098258,
-                            "text": "呵呵呵呵呵呵呵呵咯咯咯二咯咯咯"
-                        },
-                        "children": [
-                            {
-                                "data": {
-                                    "id": "ccxu85jy16o0",
-                                    //"created": 1626771098258,
-                                    "text": "每一天要么明天明天明天明天明天明天明天"
-                                },
-                                "children": []
-                            },
-                            {
-                                "data": {
-                                    "id": "ccxu85jy16o0",
-                                    //"created": 1626771098258,
-                                    "text": "微软微软微软微软微软微软微软微软微软为"
-                                },
-                                "children": []
-                            }
-                        ]
-                    },
-                    {
-                        "data": {
-                            "id": "ccxu85jy16o0",
-                            //"created": 1626771098258,
-                            "text": "胜多负少打发发发发发啊啊打发打法发啊发"
-                        }
-                    },
-                    {
-                        "data": {
-                            "id": "ccxu85jy16o0",
-                            //"created": 1626771098258,
-                            "text": "胜多负少打发发发发发啊啊打发打法发啊发"
-                        }
-                    },
-                    {
-                        "data": {
-                            "id": "ccxu85jy16o0",
-                            //"created": 1626771098258,
-                            "text": "胜多负少打发发发发发啊啊打发打法发啊发"
-                        }
-                    },
-                    {
-                        "data": {
-                            "id": "ccxu85jy16o0",
-                            //"created": 1626771098258,
-                            "text": "胜多负少打发发发发发啊啊打发打法发啊发"
-                        },
-                        "children": [
-                            {
-                                "data": {
-                                    "id": "ccxu85jy16o0",
-                                    //"created": 1626771098258,
-                                    "text": "每一天要么明天明天明天明天明天明天明天"
-                                },
-                                "children": [
-                                    {
-                                        "data": {
-                                            "id": "ccxu85jy16o0",
-                                            //"created": 1626771098258,
-                                            "text": "每一天要么明天明天明天明天明天明天明天"
-                                        },
-                                        "children": []
-                                    },
-                                    {
-                                        "data": {
-                                            "id": "ccxu85jy16o0",
-                                            //"created": 1626771098258,
-                                            "text": "微软微软微软微软微软微软微软微软微软为"
-                                        },
-                                        "children": []
-                                    }
-                                ]
-                            },
-                            {
-                                "data": {
-                                    "id": "ccxu85jy16o0",
-                                    //"created": 1626771098258,
-                                    "text": "微软微软微软微软微软微软微软微软微软为"
-                                },
-                                "children": []
-                            }
-                        ]
-                    },
-                    {
-                        "data": {
-                            "id": "ccxu85jy16o0",
-                            //"created": 1626771098258,
-                            "text": "胜多负少打发发发发发啊啊打发打法发啊发"
-                        }
-                    },
-                    {
-                        "data": {
-                            "id": "ccxu85jy16o0",
-                            //"created": 1626771098258,
-                            "text": "胜多负少打发发发发发啊啊打发打法发啊发"
-                        }
-                    },
-                    {
-                        "data": {
-                            "id": "ccxu85jy16o0",
-                            //"created": 1626771098258,
-                            "text": "胜多负少打发发发发发啊啊打发打法发啊发"
-                        },
-                        "children": [
-                            {
-                                "data": {
-                                    "id": "ccxu85jy16o0",
-                                    //"created": 1626771098258,
-                                    "text": "每一天要么明天明天明天明天明天明天明天"
-                                },
-                                "children": []
-                            },
-                            {
-                                "data": {
-                                    "id": "ccxu85jy16o0",
-                                    //"created": 1626771098258,
-                                    "text": "微软微软微软微软微软微软微软微软微软为"
-                                },
-                                "children": []
-                            }
-                        ]
-                    },
-                    {
-                        "data": {
-                            "id": "ccxu85jy16o0",
-                            //"created": 1626771098258,
-                            "text": "胜多负少打发发发发发啊啊打发打法发啊发"
-                        }
-                    },
-                    {
-                        "data": {
-                            "id": "ccxu85jy16o0",
-                            //"created": 1626771098258,
-                            "text": "胜多负少打发发发发发啊啊打发打法发啊发"
-                        }
-                    }
-                ]
-            },
-            "template": "default",
-            "theme": "fresh-blue",
-            "version": "1.4.33"
-        }
+        
+        this.projectId = data.id;
+        this.projectTitle = data.title;
+        // this.data1 = {
+        //     "root":{
+        //         "data":{
+        //             "id":"root",
+        //             "text":"服务器服务费服务器服务费服务器服务费"
+        //         },
+        //         "children":[
+        //             {
+        //                 "data": {
+        //                     "id": "ccxu85jy16o111110",
+        //                     //"created": 1626771098258,
+        //                     "text": "呵呵呵呵呵呵呵呵咯咯咯二咯咯咯",
+        //                     "color":"#ff0000"
+        //                     //'font-size', 'font-family', 'font-weight', 'font-style', 'background', 'color'
+        //                 },
+        //                 "children": [
+        //                     {
+        //                         "data": {
+        //                             "id": "ccxu85jy16o0",
+        //                             //"created": 1626771098258,
+        //                             "text": "每一天要么明天明天明天明天明天明天明天"
+        //                         },
+        //                         "children": []
+        //                     },
+        //                     {
+        //                         "data": {
+        //                             "id": "ccxu85jy16o0",
+        //                             //"created": 1626771098258,
+        //                             "text": "微软微软微软微软微软微软微软微软微软为"
+        //                         },
+        //                         "children": []
+        //                     }
+        //                 ]
+        //             }
+        //           
+        //         ]
+        //     },
+        //     "template": "default",
+        //     "theme": "fresh-blue",
+        //     "version": "1.4.33"
+        // }
+
+        //this.transformData(this.data);
+        
     },
     close:function(){
         this.maskDiv.destroy();
-        this.container.destroy();
+        if(this.container)this.container.destroy();
         this.fireEvent("close");
         delete this;
     },
@@ -192,14 +85,19 @@ MWF.xApplication.TeamWork.Minder = new Class({
                 this.close()
             }.bind(this)
         })
-        this.container = new Element("div.bam_mind_container",{styles:this.css.container}).inject(this.content);
-        this.computeSize();
-        this.load()
+        this.getData(function(){
+            if(this.maskDiv) {
+                this.container = new Element("div.bam_mind_container",{styles:this.css.container}).inject(this.content);
+                this.computeSize();
+                this.load()
+            }
+        }.bind(this));
+        
     },
     load:function(){
         this.container.empty();
         this.loadResource( function(){
-            this.loadKityMinder( this.data );
+            this.loadKityMinder( this.minderData );
         }.bind(this) );
         this.attachEvent();
         
@@ -227,26 +125,27 @@ MWF.xApplication.TeamWork.Minder = new Class({
         data.theme = data.theme || this.options.theme;
         data.template = data.template || this.options.template;
 
-        // this.deepestLevel = 0;
-        // km.on("import", function (e) {
-        //     if ( !_self.alreadyBind ) {
-        //         var nodes = km.getAllNode();
-        //         nodes.forEach(function (node) {
-        //             var level = node.getLevel();
-        //             _self.deepestLevel = level > _self.deepestLevel ? level : _self.deepestLevel;
-
-        //             _self.fireEvent( "postLoadNode", node );
-        //         });
-        //         _self.alreadyBind = true;
-        //         if( _self.options.hasNavi )_self.loadNavi();
-        //         _self.fireEvent( "postLoad" , _self );
-        //     }
-        // });
-        // //km.on("execCommand", function(e){
-        // //    if (e.commandName === "template"  ) {
-        // //        _self.moveToCenter();
-        // //    }
-        // //})
+        this.deepestLevel = 0;
+        km.on("import", function (e) {
+            if ( !_self.alreadyBind ) {
+                var nodes = km.getAllNode();
+                nodes.forEach(function (node) {
+                    var level = node.getLevel();
+                    _self.deepestLevel = level > _self.deepestLevel ? level : _self.deepestLevel;
+                    
+                    _self.handleNode(node);
+                    //_self.fireEvent( "postLoadNode", node );
+                });
+                _self.alreadyBind = true;
+                _self.handleKM();
+                //_self.fireEvent( "postLoad" , _self );
+            }
+        });
+        //km.on("execCommand", function(e){
+        //    if (e.commandName === "template"  ) {
+        //        _self.moveToCenter();
+        //    }
+        //})
         // km.on("layoutallfinish",function(){
         //     if( _self.templateChanged || _self.isMovingCenter ){
         //         _self.moveToCenter();
@@ -258,7 +157,20 @@ MWF.xApplication.TeamWork.Minder = new Class({
         km.importJson(data);
         km.execCommand('hand');
     },
-
+    handleNode:function(minderNode){
+        //import单个node完成
+        var cNode = minderNode.getRenderContainer().node;
+        
+        //minderNode.textContent("xxxxxxxxxxx");
+        cNode.addEventListener("dblclick", function ( ev ) {
+            //alert(22)
+        });
+        
+    },
+    handleKM:function(){
+        //import完成
+        //alert(1)
+    },
     moveToCenter: function(){
         //setTimeout( this._moveToCenter.bind(this) , 100 );
           this._moveToCenter();
@@ -343,6 +255,66 @@ MWF.xApplication.TeamWork.Minder = new Class({
             "left":"100px",
             "top":"100px"
         })
+    },
+    getData:function(callback){
+        this.minderData = {
+            "root":{
+                "data":{
+                    "id":"root",
+                    "text":this.projectTitle
+                },
+                "template": "default",
+                "theme": "fresh-blue",
+                "version": "1.4.33"
+            } 
+        };
+        var promise = this.rootActions.TaskAction.listAllTaskWithProjectId(this.projectId);
+        promise.then(function(json){ 
+            if(json.data){
+                this.minderData.root.children = json.data;
+                this.transformData();
+                if(callback)callback()
+            }
+        }.bind(this))
+
+        //this.transformData();
+    },
+    transformData:function(){
+        //this.minderData;
+
+        this.dealData(this.minderData.root);
+    },
+    dealData:function(node){ 
+        if(node.data){ 
+            //node.data.title = node.data.text;
+            if(node.data.completed){
+                node.data.text = "["+this.lp.completed+"]"+node.data.text;
+                node.data.color = "#73bf4d";
+            }else if(node.data.deleted){
+                node.data.text = "["+this.lp.deleted+"]"+node.data.text;
+                node.data.color = "#A9A9A9";
+            }else if(node.data.overtime){
+                node.data.text = "["+this.lp.overtime+"]"+node.data.text;
+                node.data.color = "#e6240e"
+            }
+        }
+        
+        var children = node.children;
+        if(children && children.length > 0){
+            children.each(function(child){ 
+                if(child.data && child.data.priority){ 
+                    delete child.data.priority
+                } 
+                this.dealData(child);
+            }.bind(this))
+        }
     }
+    // getChildrenData:function(node){
+    //     var result = [];
+    //     if(node.children && node.children.length>0){
+    //         result = node.children;
+    //     }
+    //     return result;
+    // }
 
 });

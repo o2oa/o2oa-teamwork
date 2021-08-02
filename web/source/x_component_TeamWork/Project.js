@@ -678,7 +678,9 @@ MWF.xApplication.TeamWork.Project = new Class({
         taskGroupItemTitleReload.addEvents({
             click:function(){
                 this.createTaskGroupItemLayout(node,data);
-            }.bind(this)
+            }.bind(this),
+            mouseover:function(){ this.setStyles({"background-image":"url(../x_component_TeamWork/$Project/default/icon/icon_reload_click.png)"}) },
+            mouseout:function(){ this.setStyles({"background-image":"url(../x_component_TeamWork/$Project/default/icon/icon_reload.png)"}) }
         });
 
 

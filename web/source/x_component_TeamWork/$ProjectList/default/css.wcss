@@ -276,6 +276,28 @@
         "float":"left",
         "line-height":"40px"
     },
+    "statLayout":{
+        "position":"absolute",
+        "left":"0px",
+        "bottom":"0px",
+        "width":"100%",
+        "cursor":"pointer",
+        "height":"50px"
+    },
+    "statIcon":{
+        "float":"left",
+        "width":"20px",
+        "height":"100%",
+        "margin-left":"20px",
+        "background": "url(../x_component_TeamWork/$ProjectList/default/icon/stat40.png) no-repeat center ",
+        "background-size":"contain"
+    },
+    "statTxt":{
+        "float":"left",
+        "height":"100%",
+        "line-height":"50px",
+        "margin-left":"10px"
+    },
 
     "naviContent":{
         "background-color":"#ffffff",
@@ -283,6 +305,7 @@
         "width":"300px",
         "height":"100%",
         "overflow-y":"auto",
+        "position":"relative",
         "border-right":"1px solid #cccccc"
         //"box-shadow":" 0 2px 4px 0 "
     },

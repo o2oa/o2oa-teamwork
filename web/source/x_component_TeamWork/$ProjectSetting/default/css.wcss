@@ -256,7 +256,7 @@
         "float":"left",
         "width":"16px",
         "height":"16px",
-        "background":"url(/x_component_TeamWork/$ProjectSetting/default/icon/icon_unselected.png) no-repeat center "
+        "background":"url(../x_component_TeamWork/$ProjectSetting/default/icon/icon_unselected.png) no-repeat center "
      },
      "authItemTitle":{
         "float":"left",
@@ -278,7 +278,8 @@
         "line-height":"30px"
      },
      "detailStatContainer":{
-         "padding-left":"50px"
+         "padding-left":"50px",
+         "overflow":"auto"
       },
      "detailStatTotal":{
         "margin-top":"5px",
@@ -305,6 +306,30 @@
         "width":"40px",
         "height":"3px",
         "border-radius":"3px"
+     },
+     "minderContainer":{
+         "padding-left":"50px",
+         "overflow":"auto"
+     },
+     "mind":{
+         "height":"30px",
+         "width":"96px",
+         "border":"1px solid #b2b2b2",
+         "border-radius":"2px",
+         "cursor":"pointer"
+     },
+     "mindIcon":{
+         "float":"left",
+         "margin":"5px",
+         "height":"20px",
+         "width":"20px",
+         "background":"url(../x_component_TeamWork/$ProjectSetting/default/icon/mind.png) no-repeat center ",
+         "background-size":"contain"
+     },
+     "mindText":{
+         "float":"left",
+         "height":"30px",
+         "line-height":"30px"
      },
      "moreActionTitle":{
         "margin-top":"20px",

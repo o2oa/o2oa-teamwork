@@ -51,7 +51,10 @@ MWF.xApplication.TeamWork.LP = {
 
 	},
 	"minder":{
-		"clickClose":"点击关闭"
+		"clickClose":"点击关闭",
+		"completed":"已完成",
+		"deleted":"已删除",
+		"overtime":"已超时"
 	},
 	"ProjectList":{
 		"navi":{
@@ -127,7 +130,8 @@ MWF.xApplication.TeamWork.LP = {
 			"over":"已逾期",
 			"taskStat":"任务统计",
 			"create":"创建",
-			"at":"于"
+			"at":"于",
+			"trace":"任务跟踪"
 		},
 		"projectAccess":"权限管理",
 		"projectMore":"更多设置",
@@ -341,7 +345,7 @@ MWF.xApplication.TeamWork.LP = {
 		"content":"确定复制该任务？"
 	},
 	"stat":{
-
+		
 	},
 	"common":{
 		"tooltip":{
