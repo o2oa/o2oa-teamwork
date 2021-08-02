@@ -547,6 +547,33 @@ MWF.xApplication.TeamWork.ProjectSetting = new Class({
         var detailStatTotalCount = new Element("div.detailStatTotalCount",{styles:this.css.detailStatTotalCount,text:this.projectData.overtimeTotal}).inject(detailStatOver);
         var detailStatTotalBar = new Element("div.detailStatTotalBar",{styles:this.css.detailStatTotalBar}).inject(detailStatOver);
 
+        var minderContainer = new Element("div.minderContainer",{styles:this.css.minderContainer}).inject(this.projectSettingLayout);
+        var mind = new Element("div.mind",{styles:this.css.mind}).inject(minderContainer);
+        var mindIcon = new Element("div.mindIcon",{styles:this.css.mindIcon}).inject(mind);
+        var mindText = new Element("div.mindText",{styles:this.css.mindText,"text":this.lp.projectDetails.trace}).inject(mind);
+
+        mind.addEvents({
+            "mouseover":function(){
+                this.setStyles({"border":"1px solid #4a90e2"});
+                mindIcon.setStyles({ "background-image":"url(../x_component_TeamWork/$ProjectSetting/default/icon/mind_click.png)" });
+                mindText.setStyles({"color":"#4a90e2"})
+            },
+            "mouseout":function(){
+                this.setStyles({"border":"1px solid #b2b2b2"});
+                mindIcon.setStyles({ "background-image":"url(../x_component_TeamWork/$ProjectSetting/default/icon/mind.png)" });
+                mindText.setStyles({"color":"#666666"})
+            },
+            "click":function(){ debugger
+                MWF.xDesktop.requireApp("TeamWork", "Minder", function(){
+                    var minder = new MWF.xApplication.TeamWork.Minder(this.container,this.app,this.data,{
+                        onClose:function(){
+                            if(minder) delete minder;
+                        }
+                    });
+                    minder.open();
+                }.bind(this));
+            }.bind(this)
+        })
     },
     loadAccess:function(){
         var _self = this;

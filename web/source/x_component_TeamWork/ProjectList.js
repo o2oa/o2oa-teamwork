@@ -364,32 +364,31 @@ MWF.xApplication.TeamWork.ProjectList = new Class({
                 new Element("div.groupAddText",{styles:this.css.groupAddText,text:this.lp.navi.addGroup}).inject(this.groupAdd);
 
 
-
                 //统计入口
-                this.statLayout = new Element("div.statLayout",{styles:this.css.statLayout}).inject(this.naviContent);
-                this.statLayout.addEvents({
-                    "mouseover":function(){ 
-                        this.setStyles({"background-color":"#f2f5f7"});
-                        statIcon.setStyles({
-                            "background-image":"url(../x_component_TeamWork/$ProjectList/default/icon/stat_click40.png)"
-                        });
-                        statTxt.setStyles({"color":"#4a90e2"})
-                     },
-                    "mouseout":function(){ 
-                        this.setStyles({"background-color":""});
-                        statIcon.setStyles({
-                            "background-image":"url(../x_component_TeamWork/$ProjectList/default/icon/stat40.png)"
-                        });
-                        statTxt.setStyles({"color":""})
-                     },
-                     "click":function(){
-                        MWF.xDesktop.requireApp("TeamWork", "Stat", function(){
-                            new MWF.xApplication.TeamWork.Stat(_self.container,_self.app)
-                        });
-                     }
-                });
-                var statIcon = new Element("div.statIcon",{styles:this.css.statIcon}).inject(this.statLayout);
-                var statTxt = new Element("div.statTxt",{styles:this.css.statTxt,"text":"统计"}).inject(this.statLayout);
+                // this.statLayout = new Element("div.statLayout",{styles:this.css.statLayout}).inject(this.naviContent);
+                // this.statLayout.addEvents({
+                //     "mouseover":function(){ 
+                //         this.setStyles({"background-color":"#f2f5f7"});
+                //         statIcon.setStyles({
+                //             "background-image":"url(../x_component_TeamWork/$ProjectList/default/icon/stat_click40.png)"
+                //         });
+                //         statTxt.setStyles({"color":"#4a90e2"})
+                //      },
+                //     "mouseout":function(){ 
+                //         this.setStyles({"background-color":""});
+                //         statIcon.setStyles({
+                //             "background-image":"url(../x_component_TeamWork/$ProjectList/default/icon/stat40.png)"
+                //         });
+                //         statTxt.setStyles({"color":""})
+                //      },
+                //      "click":function(){
+                //         MWF.xDesktop.requireApp("TeamWork", "Stat", function(){
+                //             new MWF.xApplication.TeamWork.Stat(_self.container,_self.app)
+                //         });
+                //      }
+                // });
+                // var statIcon = new Element("div.statIcon",{styles:this.css.statIcon}).inject(this.statLayout);
+                // var statTxt = new Element("div.statTxt",{styles:this.css.statTxt,"text":"统计"}).inject(this.statLayout);
 
             }
 

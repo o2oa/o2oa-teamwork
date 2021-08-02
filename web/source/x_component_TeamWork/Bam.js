@@ -793,8 +793,8 @@ MWF.xApplication.TeamWork.Bam = new Class({
         new Element("th.th",{styles:this.css.projectTh,text:this.lp.project.status}).inject(tr);
         new Element("th.th",{styles:this.css.projectTh}).inject(tr);
 
-        this.loadingContainer = new Element("div.loadingContainer",{styles:this.css.loadingContainer}).inject(this.projectTableLayout);
-        this.app.setLoading(this.loadingContainer);
+        //this.loadingContainer = new Element("div.loadingContainer",{styles:this.css.loadingContainer}).inject(this.projectTableLayout);
+        //this.app.setLoading(this.loadingContainer);
         this.loadProjectData(filter);
     },
     loadProjectData:function(filter){
@@ -805,6 +805,9 @@ MWF.xApplication.TeamWork.Bam = new Class({
         var pageCount = 30;
         var filter = filter || {};
         this.pageLoading = true;
+
+        this.loadingContainer = new Element("div.loadingContainer",{styles:this.css.loadingContainer}).inject(this.projectTableLayout);
+        this.app.setLoading(this.loadingContainer);
         
         this.rootActions.ProjectAction.listPageWithFilterByManager(page,pageCount,filter,function(json){ 
             if(this.loadingContainer) this.loadingContainer.destroy();
